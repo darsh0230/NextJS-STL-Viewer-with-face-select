@@ -1,0 +1,8 @@
+https://stackoverflow.com/questions/61269336/find-neigbouring-vertices-of-a-vertex
+
+apply quaternion
+https://stackoverflow.com/questions/70452623/three-js-rotation-to-marked-face
+
+https://stackoverflow.com/questions/59561323/threejs-find-neighbor-faces-in-planebuffergeometry
+
+https://stackoverflow.com/questions/42046207/how-to-get-all-the-vertices-edges-and-triangles-information-of-my-scene-using
