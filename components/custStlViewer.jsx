@@ -1,10 +1,34 @@
-import React from "react";
 import { useState, useEffect } from "react";
-import { Box3Helper, Side } from "three";
+import style from "../styles/Home.module.css";
+import { Canvas } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { Edges } from "@react-three/drei";
 import * as THREE from "three";
 
+import { extend, useThree } from "@react-three/fiber";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
+// Custom orbit controls
+extend({ OrbitControls });
+function CustOrbitControl(props) {
+  const { camera, gl } = useThree();
+  return (
+    <orbitControls attach={"orbitControls"} args={[camera, gl.domElement]} />
+  );
+}
+
+// Custom Light Bulb
+function LightBulb(props) {
+  return (
+    <mesh {...props}>
+      <pointLight castShadow />
+      <sphereBufferGeometry args={[0.2, 30, 10]} />
+      <meshPhongMaterial emissive={"yellow"} />
+    </mesh>
+  );
+}
+
+// Custom Object Loader
 function CustModelLoader({
   props,
   modelUrl = "",
@@ -157,4 +181,31 @@ function CustModelLoader({
     </>
   );
 }
-export default CustModelLoader;
+
+// export the scene
+export default function CustStlViewer({
+  modelUrl = "",
+  onhoverColor = [0, 0, 0],
+  modelColor = [1, 1, 1],
+}) {
+  return (
+    <div className={style.scene}>
+      <Canvas
+        shadows={true}
+        className={style.canvas}
+        camera={{
+          position: [-6, 7, 7],
+        }}>
+        <LightBulb position={[0, 8, 0]} />
+        <ambientLight color={"white"} intensity={0.2} />
+        <CustModelLoader
+          modelUrl={modelUrl}
+          onhoverColor={onhoverColor}
+          modelColor={modelColor}
+        />
+        <primitive object={new THREE.AxesHelper(10)} />
+        <CustOrbitControl />
+      </Canvas>
+    </div>
+  );
+}
